@@ -12,7 +12,7 @@ export default function HistoryEntry({ nameOfGame, players }) {
     <Grid>
       <Title>{nameOfGame}</Title>
       <ul>
-        {players.map(el => (
+        {players?.map(el => (
           <Player key={el.player}>
             <span>{el.player}</span>
             <span>{el.score}</span>

@@ -1,16 +1,12 @@
 import styled from 'styled-components'
 import HistoryEntry from './components/HistoryEntry'
 
-export default function History({ gameName, players }) {
+export default function History({ props }) {
   return (
     <Wrapper>
-      {players ? (
-        <>
-          <HistoryEntry nameOfGame={gameName} players={players} />{' '}
-        </>
-      ) : (
-        'You have no finished games'
-      )}
+      {props.map(({ gameName, players }) => (
+        <HistoryEntry nameOfGame={gameName} players={players} />
+      ))}
     </Wrapper>
   )
 }

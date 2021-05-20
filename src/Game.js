@@ -10,12 +10,12 @@ export default function Game({
   players,
   updateScore,
 }) {
-  console.log(resetScores)
   return (
     <Wrapper>
       <Header>{gameName}</Header>
       {players.map(({ score, player }, index) => (
         <Player
+          key={player}
           onMinus={() => updateScore(index, -1)}
           onPlus={() => updateScore(index, 1)}
           name={player}

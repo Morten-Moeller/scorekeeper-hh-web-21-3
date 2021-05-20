@@ -1,14 +1,21 @@
+import { useEffect } from 'react'
 import { useState } from 'react'
 import './App.css'
 import Navigation from './components/Navigation'
 import Game from './Game'
 import History from './Histroy'
 import Play from './Play'
+import { saveToLocal, loadFromLocal } from './utils/toLocal'
 
 function App() {
   const [players, setPlayers] = useState([{}])
   const [gameName, setGameName] = useState('')
-  const [history, setHistory] = useState(null)
+  const [history, setHistory] = useState(loadFromLocal('history') ?? [])
+
+  useEffect(() => {
+    saveToLocal('history', history)
+    console.log(history)
+  }, [history])
 
   const pages = [
     { title: 'Play', id: 'play' },
@@ -28,9 +35,7 @@ function App() {
           handleEndGame={handleEndGame}
         ></Game>
       )}
-      {currentPageId === 'history' && (
-        <History gameName={gameName} players={players} />
-      )}
+      {currentPageId === 'history' && <History props={history} />}
       {currentPageId !== 'game' && (
         <Navigation
           onNavigate={onNavigate}
@@ -42,6 +47,7 @@ function App() {
   )
 
   function handleEndGame() {
+    setHistory([...history, { gameName, players }])
     setCurrentPageId('history')
   }
 

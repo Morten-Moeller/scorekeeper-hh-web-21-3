@@ -33,7 +33,6 @@ export default function GameForm({ onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    console.log(event.target)
     const form = event.target
     const nameOfGame = form.elements.nameOfGame.value
     const players = form.elements.players.value
@@ -42,7 +41,11 @@ export default function GameForm({ onSubmit }) {
       .map(name => name.trim())
       .filter(Boolean)
     const playersArrObj = playersArray.map(name => ({ player: name, score: 0 }))
-
+    if (playersArrObj.length < 2) {
+      return alert('You need to have atleast two players')
+    } else if (new Set(playersArray).size !== playersArray.length) {
+      return alert('Pleas make sure you have no dublicate names')
+    }
     onSubmit(nameOfGame, playersArrObj)
   }
 }
