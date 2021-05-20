@@ -6,19 +6,20 @@ import Player from './components/Player'
 export default function Game({
   handleEndGame,
   resetScores,
-  game,
+  gameName,
+  players,
   updateScore,
 }) {
   console.log(resetScores)
   return (
     <Wrapper>
-      <Header>{game.name}</Header>
-      {game.players.map((player, index) => (
+      <Header>{gameName}</Header>
+      {players.map(({ score, player }, index) => (
         <Player
           onMinus={() => updateScore(index, -1)}
           onPlus={() => updateScore(index, 1)}
-          name={player.player}
-          score={player.score}
+          name={player}
+          score={score}
         />
       ))}
       <Button onClick={resetScores}>Reset scores</Button>

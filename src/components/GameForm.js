@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import Button from './Button'
 
 GameForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
@@ -26,7 +27,7 @@ export default function GameForm({ onSubmit }) {
           required
         />
       </label>
-      <button>Create game</button>
+      <Button>Create game</Button>
     </Form>
   )
 
@@ -36,9 +37,12 @@ export default function GameForm({ onSubmit }) {
     const form = event.target
     const nameOfGame = form.elements.nameOfGame.value
     const players = form.elements.players.value
-    const playersArray = players.split(',').map(el => el.trim())
-    const playersArrObj = playersArray.map(el => ({ player: el, score: 0 }))
-    console.log(playersArrObj)
+    const playersArray = players
+      .split(',')
+      .map(name => name.trim())
+      .filter(Boolean)
+    const playersArrObj = playersArray.map(name => ({ player: name, score: 0 }))
+
     onSubmit(nameOfGame, playersArrObj)
   }
 }

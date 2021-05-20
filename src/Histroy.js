@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 import HistoryEntry from './components/HistoryEntry'
 
-export default function History({ game }) {
+export default function History({ gameName, players }) {
   return (
     <Wrapper>
-      {game.players ? (
+      {players ? (
         <>
-          <HistoryEntry nameOfGame={game.name} players={game.players} />{' '}
+          <HistoryEntry nameOfGame={gameName} players={players} />{' '}
         </>
       ) : (
         'You have no finished games'

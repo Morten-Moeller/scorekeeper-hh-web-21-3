@@ -6,7 +6,9 @@ import History from './Histroy'
 import Play from './Play'
 
 function App() {
-  const [game, setGame] = useState({})
+  const [players, setPlayers] = useState([{}])
+  const [gameName, setGameName] = useState('')
+  const [history, setHistory] = useState(null)
 
   const pages = [
     { title: 'Play', id: 'play' },
@@ -16,29 +18,18 @@ function App() {
 
   return (
     <div className="App">
-      {currentPageId === 'play' && (
-        <Play
-          handleGame={handleGame}
-          pages={pages}
-          currentPageId={currentPageId}
-          onNavigate={onNavigate}
-        ></Play>
-      )}
+      {currentPageId === 'play' && <Play handleGame={handleGame}></Play>}
       {currentPageId === 'game' && (
         <Game
-          game={game}
+          players={players}
+          gameName={gameName}
           updateScore={updateScore}
           resetScores={resetScores}
           handleEndGame={handleEndGame}
         ></Game>
       )}
       {currentPageId === 'history' && (
-        <History
-          game={game}
-          pages={pages}
-          currentPageId={currentPageId}
-          onNavigate={onNavigate}
-        />
+        <History gameName={gameName} players={players} />
       )}
       {currentPageId !== 'game' && (
         <Navigation
@@ -59,27 +50,23 @@ function App() {
   }
 
   function resetScores() {
-    setGame({
-      name: game.name,
-      players: game.players.map(player => ({ ...player, score: 0 })),
-    })
+    setPlayers(players.map(player => ({ ...player, score: 0 })))
   }
 
   function updateScore(index, value) {
-    const playerToUpdate = game.players[index]
-    console.log(playerToUpdate)
+    const playerToUpdate = players[index]
     const newScore = { ...playerToUpdate, score: playerToUpdate.score + value }
-    console.log(game.players)
     const updateScore = [
-      ...game.players.slice(0, index),
+      ...players.slice(0, index),
       newScore,
-      ...game.players.slice(index + 1),
+      ...players.slice(index + 1),
     ]
-    setGame({ name: game.name, players: updateScore })
+    setPlayers(updateScore)
   }
 
   function handleGame(nameOfGame, players) {
-    setGame({ name: nameOfGame, players: players })
+    setPlayers(players)
+    setGameName(nameOfGame)
     setCurrentPageId('game')
   }
 }
