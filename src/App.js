@@ -47,7 +47,14 @@ function App() {
   )
 
   function handleEndGame() {
-    setHistory([...history, { gameName, players }])
+    const date = new Date().toLocaleDateString('de-DE', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    })
+    setHistory([...history, { gameName, players, date }])
     setCurrentPageId('history')
   }
 
