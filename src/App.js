@@ -1,39 +1,58 @@
+import { useEffect } from 'react'
 import { useState } from 'react'
 import './App.css'
-import Button from './components/Button'
-import Player from './components/Player'
-import PlayerForm from './components/PlayerForm'
+import Navigation from './components/Navigation'
+import Game from './Game'
+import History from './Histroy'
+import Play from './Play'
+import { saveToLocal, loadFromLocal } from './utils/toLocal'
 
 function App() {
-  const [players, setPlayers] = useState([])
+  const [players, setPlayers] = useState([{}])
+  const [gameName, setGameName] = useState('')
+  const [history, setHistory] = useState(loadFromLocal('history') ?? [])
+
+  useEffect(() => {
+    saveToLocal('history', history)
+    console.log(history)
+  }, [history])
+
+  const pages = [
+    { title: 'Play', id: 'play' },
+    { title: 'History', id: 'history' },
+  ]
+  const [currentPageId, setCurrentPageId] = useState('play')
 
   return (
     <div className="App">
-      <PlayerForm onSubmit={createPlayer} />
-
-      <ul className="App__player-list">
-        {players.map((player, index) => (
-          <li>
-            <Player
-              onMinus={() => updateScore(index, -1)}
-              onPlus={() => updateScore(index, 1)}
-              key={player.name}
-              name={player.name}
-              score={player.score}
-            />
-          </li>
-        ))}
-      </ul>
-
-      <div className="App__buttons">
-        <Button onClick={resetScores}>Reset scores</Button>
-        <Button onClick={resetAll}>Reset all</Button>
-      </div>
+      {currentPageId === 'play' && <Play handleGame={handleGame}></Play>}
+      {currentPageId === 'game' && (
+        <Game
+          players={players}
+          gameName={gameName}
+          updateScore={updateScore}
+          resetScores={resetScores}
+          handleEndGame={handleEndGame}
+        ></Game>
+      )}
+      {currentPageId === 'history' && <History props={history} />}
+      {currentPageId !== 'game' && (
+        <Navigation
+          onNavigate={onNavigate}
+          pages={pages}
+          currentPageId={currentPageId}
+        ></Navigation>
+      )}
     </div>
   )
 
-  function resetAll() {
-    setPlayers([])
+  function handleEndGame() {
+    setHistory([...history, { gameName, players }])
+    setCurrentPageId('history')
+  }
+
+  function onNavigate(id) {
+    setCurrentPageId(id)
   }
 
   function resetScores() {
@@ -42,15 +61,19 @@ function App() {
 
   function updateScore(index, value) {
     const playerToUpdate = players[index]
-    setPlayers(players => [
+    const newScore = { ...playerToUpdate, score: playerToUpdate.score + value }
+    const updateScore = [
       ...players.slice(0, index),
-      { ...playerToUpdate, score: playerToUpdate.score + value },
+      newScore,
       ...players.slice(index + 1),
-    ])
+    ]
+    setPlayers(updateScore)
   }
 
-  function createPlayer(name) {
-    setPlayers([...players, { name, score: 0 }])
+  function handleGame(nameOfGame, players) {
+    setPlayers(players)
+    setGameName(nameOfGame)
+    setCurrentPageId('game')
   }
 }
 
