@@ -4,8 +4,8 @@ import HistoryEntry from './components/HistoryEntry'
 export default function History({ props }) {
   return (
     <Wrapper>
-      {props.map(({ gameName, players }) => (
-        <HistoryEntry nameOfGame={gameName} players={players} />
+      {props.map(props => (
+        <HistoryEntry props={props} />
       ))}
     </Wrapper>
   )
