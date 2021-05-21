@@ -16,7 +16,6 @@ export default function Play({ handleGame }) {
 const Wrapper = styled.section`
   display: grid;
   align-items: center;
-  grid-template-rows: auto 100px;
-  height: 100vh;
   gap: 10px;
+  align-self: start;
 `

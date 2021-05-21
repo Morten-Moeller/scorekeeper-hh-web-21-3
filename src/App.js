@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import './App.css'
 import Navigation from './components/Navigation'
-import Game from './Game'
-import History from './Histroy'
-import Play from './Play'
+import GamePage from './GamePage'
+import HistoryPage from './HistroyPage'
+import CreatePage from './CreatePage'
 import { saveToLocal, loadFromLocal } from './utils/toLocal'
+import styled from 'styled-components'
 
 function App() {
   const [players, setPlayers] = useState([{}])
@@ -24,18 +25,25 @@ function App() {
   const [currentPageId, setCurrentPageId] = useState('play')
 
   return (
-    <div className="App">
-      {currentPageId === 'play' && <Play handleGame={handleGame}></Play>}
+    <Wrapper className="App">
+      {currentPageId === 'play' && (
+        <CreatePage handleGame={handleGame}></CreatePage>
+      )}
       {currentPageId === 'game' && (
-        <Game
+        <GamePage
           players={players}
           gameName={gameName}
           updateScore={updateScore}
           resetScores={resetScores}
           handleEndGame={handleEndGame}
-        ></Game>
+        ></GamePage>
       )}
-      {currentPageId === 'history' && <History props={history} />}
+      {currentPageId === 'history' && (
+        <HistoryWrapper>
+          {' '}
+          <HistoryPage props={history} />
+        </HistoryWrapper>
+      )}
       {currentPageId !== 'game' && (
         <Navigation
           onNavigate={onNavigate}
@@ -43,7 +51,7 @@ function App() {
           currentPageId={currentPageId}
         ></Navigation>
       )}
-    </div>
+    </Wrapper>
   )
 
   function handleEndGame() {
@@ -83,5 +91,18 @@ function App() {
     setCurrentPageId('game')
   }
 }
+
+const Wrapper = styled.section`
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  position: absolute;
+  padding-top: 20px;
+`
+const HistoryWrapper = styled.div`
+  height: 80vh;
+  overflow-y: auto;
+`
 
 export default App

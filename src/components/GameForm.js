@@ -53,4 +53,7 @@ export default function GameForm({ onSubmit }) {
 const Form = styled.form`
   display: grid;
   gap: 20px;
+  input {
+    width: 100%;
+  }
 `

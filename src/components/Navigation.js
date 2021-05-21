@@ -27,9 +27,11 @@ export default function Navigation({ onNavigate, pages, currentPageId }) {
 
 const Nav = styled.nav`
   display: flex;
+  align-self: flex-end;
+  background-color: #ddd;
 `
 
 const NavButton = styled(Button)`
-  border-radius: 0;
+  border-radius: 0 5px 5px 0;
   width: 100%;
 `

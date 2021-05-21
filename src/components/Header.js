@@ -16,4 +16,6 @@ const HeaderStyled = styled.h2`
   margin: 0;
   font-size: 1.2em;
   font-weight: 500;
+  background-color: #ddd;
+  width: 100%;
 `

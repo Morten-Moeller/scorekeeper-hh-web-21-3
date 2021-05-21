@@ -22,14 +22,28 @@ export default function Game({
           score={score}
         />
       ))}
-      <Button onClick={resetScores}>Reset scores</Button>
-      <Button onClick={handleEndGame}>End game</Button>
+
+      <FlexContainer>
+        <Button onClick={resetScores}>Reset scores</Button>
+        <Button onClick={handleEndGame}>End game</Button>
+      </FlexContainer>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.section`
-  display: grid;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: flex-start;
+  gap: 20px;
+  width: 100%;
+  height: 90vh;
+`
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   gap: 20px;
 `
