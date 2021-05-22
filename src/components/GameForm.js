@@ -1,18 +1,16 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Button from './Button'
+import { useHistory } from 'react-router'
 
 GameForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 }
 
 export default function GameForm({ onSubmit }) {
+  let history = useHistory()
   return (
-    <Form
-      aria-label="Create a new game"
-      className="GameForm"
-      onSubmit={handleSubmit}
-    >
+    <Form aria-label="Create a new game" onSubmit={handleSubmit}>
       <label>
         Name of game:
         <input
@@ -31,6 +29,7 @@ export default function GameForm({ onSubmit }) {
           required
         />
       </label>
+
       <Button>Create game</Button>
     </Form>
   )
@@ -50,6 +49,7 @@ export default function GameForm({ onSubmit }) {
     } else if (new Set(playersArray).size !== playersArray.length) {
       return alert('Pleas make sure you have no dublicate names')
     }
+    history.push('/game')
     onSubmit(nameOfGame, playersArrObj)
   }
 }
