@@ -1,15 +1,17 @@
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import Button from './components/Button'
 import Header from './components/Header'
 import Player from './components/Player'
 
 export default function Game({
-  handleEndGame,
+  onEndGame,
   resetScores,
   gameName,
   players,
   updateScore,
 }) {
+  let history = useHistory()
   return (
     <Wrapper>
       <Header>{gameName}</Header>
@@ -25,10 +27,15 @@ export default function Game({
 
       <FlexContainer>
         <Button onClick={resetScores}>Reset scores</Button>
-        <Button onClick={handleEndGame}>End game</Button>
+        <Button onClick={handleEndGame}>End game</Button>{' '}
       </FlexContainer>
     </Wrapper>
   )
+
+  function handleEndGame() {
+    history.push('/history')
+    onEndGame()
+  }
 }
 
 const Wrapper = styled.section`

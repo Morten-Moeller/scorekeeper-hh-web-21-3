@@ -7,6 +7,7 @@ import HistoryPage from './HistroyPage'
 import CreatePage from './CreatePage'
 import { saveToLocal, loadFromLocal } from './utils/toLocal'
 import styled from 'styled-components'
+import { Redirect, Route, Switch } from 'react-router'
 
 function App() {
   const [players, setPlayers] = useState([{}])
@@ -26,31 +27,42 @@ function App() {
 
   return (
     <Wrapper className="App">
-      {currentPageId === 'play' && (
-        <CreatePage handleGame={handleGame}></CreatePage>
-      )}
-      {currentPageId === 'game' && (
-        <GamePage
-          players={players}
-          gameName={gameName}
-          updateScore={updateScore}
-          resetScores={resetScores}
-          handleEndGame={handleEndGame}
-        ></GamePage>
-      )}
-      {currentPageId === 'history' && (
-        <HistoryWrapper>
-          {' '}
-          <HistoryPage props={history} />
-        </HistoryWrapper>
-      )}
-      {currentPageId !== 'game' && (
-        <Navigation
-          onNavigate={onNavigate}
-          pages={pages}
-          currentPageId={currentPageId}
-        ></Navigation>
-      )}
+      <Switch>
+        <Route exact path="/">
+          <Redirect to={`/${currentPageId}`} />
+        </Route>
+        <Route exact path="/play">
+          <CreatePage handleGame={handleGame}></CreatePage>
+
+          <Navigation
+            onNavigate={onNavigate}
+            pages={pages}
+            currentPageId={currentPageId}
+          ></Navigation>
+        </Route>
+
+        <Route path="/game">
+          <GamePage
+            players={players}
+            gameName={gameName}
+            updateScore={updateScore}
+            resetScores={resetScores}
+            onEndGame={handleEndGame}
+          ></GamePage>
+        </Route>
+
+        <Route path="/history">
+          <HistoryWrapper>
+            <HistoryPage props={history} />
+          </HistoryWrapper>
+
+          <Navigation
+            onNavigate={onNavigate}
+            pages={pages}
+            currentPageId={currentPageId}
+          ></Navigation>
+        </Route>
+      </Switch>
     </Wrapper>
   )
 

@@ -5,7 +5,7 @@ export default function History({ props }) {
   return (
     <Wrapper>
       {props.map(props => (
-        <HistoryEntry props={props} />
+        <HistoryEntry keys={props.date} props={props} />
       ))}
     </Wrapper>
   )
