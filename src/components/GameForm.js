@@ -8,7 +8,11 @@ GameForm.propTypes = {
 
 export default function GameForm({ onSubmit }) {
   return (
-    <Form className="GameForm" onSubmit={handleSubmit}>
+    <Form
+      aria-label="Create a new game"
+      className="GameForm"
+      onSubmit={handleSubmit}
+    >
       <label>
         Name of game:
         <input
