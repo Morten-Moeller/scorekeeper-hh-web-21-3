@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import './App.css'
 import Navigation from './components/Navigation'
-import GamePage from './GamePage'
-import HistoryPage from './HistroyPage'
-import CreatePage from './CreatePage'
+import GamePage from './pages/GamePage'
+import HistoryPage from './pages/HistroyPage'
+import CreatePage from './pages/CreatePage'
 import { saveToLocal, loadFromLocal } from './utils/toLocal'
 import styled from 'styled-components'
 import { Redirect, Route, Switch } from 'react-router'
@@ -16,7 +16,6 @@ function App() {
 
   useEffect(() => {
     saveToLocal('history', history)
-    console.log(history)
   }, [history])
 
   const pages = [
@@ -110,6 +109,7 @@ const Wrapper = styled.section`
   width: 100vw;
   align-items: center;
   position: absolute;
+  padding: 0;
   padding-top: 20px;
 `
 const HistoryWrapper = styled.div`

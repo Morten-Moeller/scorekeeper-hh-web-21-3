@@ -1,10 +1,21 @@
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import Button from './components/Button'
-import Header from './components/Header'
-import Player from './components/Player'
+import Button from '../components/Button'
+import Header from '../components/Header'
+import Player from '../components/Player'
+import PropTypes from 'prop-types'
 
-export default function Game({
+GamePage.propTypes = {
+  onEndGame: PropTypes.func.isRequired,
+  resetScores: PropTypes.func.isRequired,
+  gameName: PropTypes.string.isRequired,
+  players: PropTypes.arrayOf(
+    PropTypes.shape({ name: PropTypes.string, score: PropTypes.number })
+  ).isRequired,
+  updateScore: PropTypes.func.isRequired,
+}
+
+export default function GamePage({
   onEndGame,
   resetScores,
   gameName,
@@ -46,6 +57,7 @@ const Wrapper = styled.section`
   gap: 20px;
   width: 100%;
   height: 90vh;
+  padding: 20px;
 `
 
 const FlexContainer = styled.div`

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import HistoryEntry from './components/HistoryEntry'
+import HistoryEntry from '../components/HistoryEntry'
 
-export default function History({ props }) {
+export default function HistoryPage({ props }) {
   return (
     <Wrapper>
       {props.map(props => (
@@ -15,4 +15,5 @@ const Wrapper = styled.section`
   display: grid;
   justify-items: center;
   gap: 20px;
+  padding: 20px;
 `

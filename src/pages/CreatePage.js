@@ -1,7 +1,12 @@
 import styled from 'styled-components'
-import GameForm from './components/GameForm'
+import GameForm from '../components/GameForm'
+import PropTypes from 'prop-types'
 
-export default function Play({ handleGame }) {
+CreatePage.propTypes = {
+  handleGame: PropTypes.func.isRequired,
+}
+
+export default function CreatePage({ handleGame }) {
   return (
     <Wrapper>
       <GameForm onSubmit={onSubmit} />
@@ -18,4 +23,5 @@ const Wrapper = styled.section`
   align-items: center;
   gap: 10px;
   align-self: start;
+  padding: 20px;
 `

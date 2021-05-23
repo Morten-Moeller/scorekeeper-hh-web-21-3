@@ -2,9 +2,10 @@ import { render, screen } from '@testing-library/react'
 import HistoryEntry from './HistoryEntry'
 
 describe('HistoryEntry', () => {
-  it('renders a title and players', async () => {
+  it('renders a title, date and players', async () => {
     render(
       <HistoryEntry
+        date="23. Mai 2021, 20:55"
         nameOfGame="Carcassonne"
         players={[
           { name: 'John', score: 2 },
